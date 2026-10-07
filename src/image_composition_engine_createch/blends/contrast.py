@@ -1,57 +1,80 @@
 import numpy as np
 
+class Overlay : 
 
+    def __init__(self): 
+        pass
+    
+    
+    def apply( self, base_color, blend_color): 
 
-def contrast_overlay( base_color, blend_color): 
-
-    return np.where(base_color <= 0.5,2 * base_color * blend_color,1 - 2 * (1 - base_color) * (1 - blend_color))
-
-
-
-
-
-
-def contrast_softlight( base_color, blend_color): 
-
-    return np.where( (blend_color > 0.5)* (1- (1- base_color)*(1- (blend_color-0.5)))+(blend_color<= 0.5)*(blend_color * (blend_color + 0.5)))
+        return np.where(base_color <= 0.5,2 * base_color * blend_color,1 - 2 * (1 - base_color) * (1 - blend_color))
 
 
 
 
+class Softlight :
 
-def contrast_hardlight(base_color, blend_color): 
-    return ((blend_color> 0.5) * (1 - (1- base_color) * (1-2*( blend_color -0.5))) + ( blend_color <= 0.5) * (base_color * (2* blend_color)))
+    def __init__(self): 
+        pass
+    
+    
+    def apply( self, base_color, blend_color): 
 
-
-
-
-
-
-def contrast_vividlight( base_color , blend_color): 
-
-    return ((blend_color > 0.5) * (1 - (1- base_color) * (1- 2 (blend_color-0.5))) +(blend_color <= 0.5) * (base_color * (2* blend_color)))
+        return np.where( (blend_color > 0.5)* (1- (1- base_color)*(1- (blend_color-0.5)))+(blend_color<= 0.5)*(blend_color * (blend_color + 0.5)))
 
 
 
+class hardlight : 
+
+    def __init__(self): 
+        pass 
+    
+    def apply( self, base_color, blend_color): 
+        return ((blend_color> 0.5) * (1 - (1- base_color) * (1-2*( blend_color -0.5))) + ( blend_color <= 0.5) * (base_color * (2* blend_color)))
 
 
 
-def linear_right (base_color, blend_color): 
-    return (( blend_color > 0.5) * (base_color + 2* (blend_color-0.5)) +(blend_color <= 0.5) * ( base_color + 2 *blend_color - 1))
+class vivid_light : 
+
+    def __init__(self):
+        pass 
+    
+    
+    def apply( self, base_color , blend_color): 
+
+        return ((blend_color > 0.5) * (1 - (1- base_color) * (1- 2 *(blend_color-0.5))) +(blend_color <= 0.5) * (base_color * (2* blend_color)))
 
 
 
 
+class linear_right : 
 
-def pin_light(base_color, blend_color): 
+    def __init__(self):
+        pass
 
-    return ((blend_color > 0.5) * (max ( base_color, 2* (blend_color-0.5) )) + (blend_color <= 0.5 ) * (min ( base_color, 2 * blend_color)))
+    def apply ( self , base_color, blend_color): 
+        return (( blend_color > 0.5) * (base_color + 2* (blend_color-0.5)) +(blend_color <= 0.5) * ( base_color + 2 *blend_color - 1))
 
 
 
+class pin_light : 
+    def __init__(self) : 
+        pass
+
+    def apply( self, base_color, blend_color): 
+
+        return ((blend_color > 0.5) * ( np.maximun ( base_color, 2* (blend_color-0.5) )) + (blend_color <= 0.5 ) * (np.minimun ( base_color, 2 * blend_color)))
 
 
-def hard_mix(base_color, blend_color): 
-    new_color = base_color + blend_color
-    return np.where(new_color >= 255, 255, 0)
+
+class hard_mix :
+
+    def __init__(self): 
+        pass
+
+
+    def apply( self ,base_color, blend_color): 
+        new_color = base_color + blend_color
+        return np.where(new_color >= 1, 1, 0)
 
