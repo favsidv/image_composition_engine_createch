@@ -4,27 +4,56 @@ import random
 
 #le pixel de sortie prend la couleur du pixel de la couche supérieure
 
-def blend_normal(base_pixel, overlay_pixel):
-    return overlay_pixel
+class Normal : 
+
+    def __init__(self ) :
+        pass
 
 
-def blend_dissolve( base_color, blend_color, opacity ) : 
-
-     if random.random() < opacity : 
-          return base_color
-     else : 
-          return blend_color 
+    def apply(self, base_pixel, overlay_pixel) : 
+        return overlay_pixel
 
 
-def blend_behind( base_color, blend_color, alpha) :
 
-     if alpha == 0 : 
-          return blend_color 
+class dissolve : 
 
-     else : 
-          return base_color
+    def __init__(self)  :
+        pass    
+            
+
+    def apply( self, base_color, blend_color, opacity ) : 
+
+        if random.random() < opacity : 
+             return base_color
+        else : 
+             return blend_color 
 
 
-def blend_clear( base_color, blend_color ) : 
-     return ( base_color[0], base_color [1], base_color[2], 0)
+
+
+class behind : 
+
+
+    def __init__(self) : 
+
+        pass
+
+    
+    def apply ( self, base_color, blend_color, alpha) :
+
+        if alpha == 0 : 
+            return blend_color 
+
+        else : 
+            return base_color
+
+
+
+class clear :
+
+    def __init__(self): 
+        pass
+
+    def apply( self , base_color, blend_color ) : 
+        return ( base_color[0], base_color [1], base_color[2], 0)
 
