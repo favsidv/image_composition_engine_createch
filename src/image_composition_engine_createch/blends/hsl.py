@@ -1,9 +1,6 @@
 import numpy as np
 
 
-
-import numpy as np
-
 def rgb_to_hsl(rgb):
     r, g, b = rgb
 
@@ -39,8 +36,7 @@ def rgb_to_hsl(rgb):
 
 
 def hue(base_color , blend_color): 
-
-
+    
 
 
 
