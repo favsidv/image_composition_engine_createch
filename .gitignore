@@ -5,6 +5,11 @@ build/
 dist/
 wheels/
 *.egg-info
-
-# Virtual environments
 .venv
+.DS_Store
+.ropeproject/
+.pytest_cache/
+.ruff_cache/
+.coverage
+output/*
+!output/.gitkeep

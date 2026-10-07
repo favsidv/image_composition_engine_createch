@@ -1,10 +1,14 @@
 [project]
 name = "image-composition-engine-createch"
 version = "0.1.0"
-description = "Add your description here"
+description = "Configuration-driven image composition engine."
 readme = "README.md"
 requires-python = ">=3.13.0"
-dependencies = []
+dependencies = [
+    "numpy>=2.3,<3",
+    "pillow>=11.3,<13",
+    "scipy>=1.16,<2",
+]
 
 [project.scripts]
 image-composition-engine-createch = "image_composition_engine_createch:main"
