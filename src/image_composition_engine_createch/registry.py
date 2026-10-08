@@ -1,5 +1,6 @@
-from .filters import Blur, Brightness, Contrast, GaussianBlur
+import math
 
+from .filters import Blur, Brightness, Contrast, GaussianBlur
 from .blends.darken import multiply
 from .blends.lighten import screen
 from .blends.normal import Normal
@@ -34,6 +35,7 @@ def create_filter(name: str, params: dict | None = None): # Partially made by AI
         settings["radius"] = settings.pop("window")
 
     try:
+        validate_filter_params(name, settings)
         return FILTERS[name](settings)
     except (TypeError, ValueError) as error:
         raise ValueError(
@@ -45,3 +47,23 @@ def create_blend(name: str):
     if not isinstance(name, str) or name not in BLENDS:
         raise ValueError(f"Unknown blending mode: {name!r}.")
     return BLENDS[name]()
+
+def validate_filter_params(name: str, params: dict) -> None:
+    """Check numeric parameters for the currently registered built-in filters."""
+
+    if name in {"brightness","contrast"}:
+        level = params.get("level")
+        if type(level) not in (int, float) or not math.isfinite(level):
+            raise ValueError("level must be a finite number.")
+        if name == "contrast" and level < 0:
+            raise ValueError("Contrast level must be nonnegative.")
+
+    if name in {"boxblur", "gaussianblur"}:
+        radius = params.get("radius")
+        if type(radius) is not int or radius < 0:
+            raise ValueError("Blur radius must be a nonnegative integer.")
+
+    if name == "gaussianblur":
+        sigma = params.get("sigma")
+        if type(sigma) not in (int, float) or not math.isfinite(sigma) or sigma <= 0:
+            raise ValueError("sigma must be a finite positive number")
