@@ -3,6 +3,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+from .validation import validate_image
+
 def load_image(path: str | Path) -> np.ndarray:
     """Load a supported single-frame image as normalized RGBA pixels.
 
@@ -33,3 +35,19 @@ def load_image(path: str | Path) -> np.ndarray:
         pixels = np.array(rgba, dtype=np.float32)
 
     return pixels / np.float32(255.0)
+
+def save_image(image: np.ndarray, path: str | Path) -> None:
+    """Save RGB or RGBA float pixels as an 8-bit PNG.
+
+    Clip finite values to [0, 1], round them to byte values and preserve alpha. Create missing parent directories without modifying the input array. An existing output file is replaced.
+    """
+    validate_image(image)
+
+    path = Path(path)
+    if path.suffix.lower() != ".png":
+        raise ValueError("The output file must have a .png extension.")
+
+    pixels = np.rint(np.clip(image,0,1) * 255).astype(np.uint8)
+    path.parent.mkdir(parents = True, exist_ok = True)
+
+    Image.fromarray(pixels).save(path, format="PNG")
