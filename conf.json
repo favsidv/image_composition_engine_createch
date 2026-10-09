@@ -1,28 +1,37 @@
 {
-    "layers": [
-      {
-        "image": "images/layers/0_photo.jpg",
-        "filters": [],
-        "blend": "normal",
-        "opacity": 1.0
-      },
-      {
-        "image": "images/layers/1_pop_bike.png",
-        "filters": [],
-        "blend": "normal",
-        "opacity": 0.32
-      },
-      {
-        "image": "images/layers/2_wall.png",
-        "filters": [],
-        "blend": "normal",
-        "opacity": 1.0
-      },
-      {
-        "image": "images/layers/3_shiny_car.png",
-        "filters": [],
-        "blend": "normal",
-        "opacity": 1.0
-      }
-    ]
-  }
+  "layers": [
+    {
+      "image": "images/layers/0_photo.jpg",
+      "filters": [
+        {
+          "name": "brightness",
+          "params": {"level": -0.104}
+        },
+        {
+          "name": "contrast",
+          "params": {"level": 1.25}
+        }
+      ],
+      "blend": "normal",
+      "opacity": 1.0
+    },
+    {
+      "image": "images/layers/1_pop_bike.png",
+      "filters": [],
+      "blend": "lighten",
+      "opacity": 0.30
+    },
+    {
+      "image": "images/layers/2_wall.png",
+      "filters": [],
+      "blend": "multiply",
+      "opacity": 1.0
+    },
+    {
+      "image": "images/layers/3_shiny_car.png",
+      "filters": [],
+      "blend": "difference",
+      "opacity": 1.0
+    }
+  ]
+}
