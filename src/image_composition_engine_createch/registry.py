@@ -6,6 +6,10 @@ from .blends.darken import ColorBurn, Darken, DarkerColor, LinearBurn, Multiply
 from .blends.hsl import Color, Hue, Luminosity, Saturation
 from .blends.lighten import ColorDodge, Lighten, LighterColor, LinearDodge, Screen
 from .blends.normal import Behind, Clear, Dissolve, Normal
+from .external_filters.bubble_pop import BubblePop
+from .external_filters.glitch import Glitch
+from .external_filters.hue import Hue as HueFilter
+from .external_filters.pixelate import Pixelate
 from .filters import Blur, Brightness, Contrast, GaussianBlur, Invert
 
 
@@ -15,6 +19,10 @@ FILTERS = {
     "invert": lambda params: Invert(**params),
     "boxblur": lambda params: Blur(**params),
     "gaussianblur": lambda params: GaussianBlur(**params),
+    "pixelate": lambda params: Pixelate(**params),
+    "glitch": lambda params: Glitch(**params),
+    "hue": lambda params: HueFilter(**params),
+    "bubble_pop": lambda params: BubblePop(**params),
 }
 
 BLENDS = {

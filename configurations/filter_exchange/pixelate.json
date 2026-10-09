@@ -1,0 +1,17 @@
+{
+  "layers": [
+    {
+      "image": "../../images/layers/0_photo.jpg",
+      "filters": [
+        {
+          "name": "pixelate",
+          "params": {
+            "size": 24
+          }
+        }
+      ],
+      "blend": "normal",
+      "opacity": 1.0
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "layers": [
+    {
+      "image": "../../images/layers/0_photo.jpg",
+      "filters": [
+        {
+          "name": "glitch",
+          "params": {
+            "intensity": 0.6,
+            "slices": 12
+          }
+        }
+      ],
+      "blend": "normal",
+      "opacity": 1.0
+    }
+  ]
+}

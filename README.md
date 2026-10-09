@@ -44,7 +44,7 @@ All layers must have matching dimensions. Images are not automatically resized.
 
 ## Available filters
 
-Filters have been made by Brune, and revisited for more comprehension by Chat-GPT.
+The five built-in filters have been made by Brune, and revisited for more comprehension by Chat-GPT.
 
 | Name | Parameters |
 | --- | --- |
@@ -57,6 +57,26 @@ Filters have been made by Brune, and revisited for more comprehension by Chat-GP
 Blur filters also accept radius instead of window. Do not provide both names.
 
 A radius of 2 gives a maximum neighborhood width of 5 pixels. Blur weights are renormalized at image boundaries.
+
+## Filters received from another group
+
+**Paul LAMOUR and Ryan Fihr HULTON** provided the following filters for the
+teacher's required filter exchange. Their four source files are copied unchanged
+into `src/image_composition_engine_createch/external_filters/`.
+
+| Name | Parameters used in the exchange configurations |
+| --- | --- |
+| pixelate | size: 24 |
+| glitch | intensity: 0.6; slices: 12 |
+| hue | angle: 60 degrees |
+| bubble_pop | amount: 12; average_size: 150; opacity: 0.5 |
+
+The files import `.base.Filter`. A local `base.py` re-exports our Filter class
+to satisfy that dependency. Integration otherwise adds only imports and registry
+entries; the engine's processing logic is unchanged.
+
+Runnable configurations and verification details are recorded in
+[the filter exchange report](docs/received_filters.md).
 
 ## Sharing filters
 
@@ -77,8 +97,8 @@ The input must be an RGB NumPy array with shape `(height, width, 3)`, dtype
 the same shape and dtype. The receiving engine handles alpha separately.
 Agree on this interface and register the class in the receiving project.
 
-Standalone import checks establish portability; they do not replace the real
-exchange and run with another student required for the assignment.
+The outgoing-file portability checks and the received-filter integration checks
+are separate. The received filters and their runs are documented above.
 
 ## Blending and transparency
 
@@ -118,6 +138,6 @@ Invalid configurations, unknown operations, unreadable images and incompatible d
 
 ## Current scope
 
-The project includes the five filters listed above. Other planned filters, including grayscale, are not implemented yet.
+The project includes five built-in filters and four received filters. Other planned filters, including grayscale, are not implemented yet.
 
-A real filter exchange with another group still needs to be demonstrated. The engine does not claim pixel-exact reproduction of Photoshop.
+The exchange with Paul LAMOUR and Ryan Fihr HULTON is documented in [the filter exchange report](docs/received_filters.md). The engine does not claim pixel-exact reproduction of Photoshop.

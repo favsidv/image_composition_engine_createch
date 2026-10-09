@@ -1,0 +1,19 @@
+{
+  "layers": [
+    {
+      "image": "../../images/layers/0_photo.jpg",
+      "filters": [
+        {
+          "name": "bubble_pop",
+          "params": {
+            "amount": 12,
+            "average_size": 150,
+            "opacity": 0.5
+          }
+        }
+      ],
+      "blend": "normal",
+      "opacity": 1.0
+    }
+  ]
+}
