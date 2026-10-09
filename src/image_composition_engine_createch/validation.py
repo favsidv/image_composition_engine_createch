@@ -1,9 +1,12 @@
 import numpy as np
 
+
 def validate_image(image: np.ndarray, channels: int | None = None) -> None:
     """Check shape, floating-point dtype and finite values.
 
-    Accept nonempty RGB or RGBA arrays using float32 or float64. Values outside [0, 1] are allowed; this function does not clip them. Raise TypeError for invalid types and ValueError for invalid data.
+    Accept nonempty RGB or RGBA arrays using float32 or float64.
+    Values outside [0, 1] are allowed; this function does not clip them.
+    Raise TypeError for invalid types and ValueError for invalid data.
     """
     if not isinstance(image, np.ndarray):
         raise TypeError("Expected a NumPy array.")
@@ -20,3 +23,10 @@ def validate_image(image: np.ndarray, channels: int | None = None) -> None:
 
     if not np.isfinite(image).all():
         raise ValueError("Pixels must contain only finite values.")
+
+
+def validate_normalized_image(image: np.ndarray, channels: int = 3) -> None:
+    """Validate a floating-point image and require all values in [0, 1]."""
+    validate_image(image, channels=channels)
+    if np.any((image < 0) | (image > 1)):
+        raise ValueError("Image values must be between 0 and 1.")

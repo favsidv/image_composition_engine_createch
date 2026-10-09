@@ -1,73 +1,52 @@
+"""Darken blend modes for normalized RGB image arrays."""
 
 import numpy as np
 
-class Darken : 
-
-    def __init__(self):
-        pass
-
-    def apply( self, base_color, blend_color): 
-
-        minR = min( base_color[0], blend_color[0])
-        minG = min(base_color[1], blend_color[1])
-        minB = min(base_color[2], blend_color[2])
-
-        return (minR, minG, minB)
+from ..contracts import BlendMode
+from ._utils import prepare_images, color_burn
 
 
+class Darken(BlendMode):
+    """Keep the lower value of each RGB channel."""
 
-class multiply : 
-
-    def __init__(self) : 
-        pass    
-
-    def apply(self, base_color, blend_color):
-
-        return (base_color * blend_color)
+    def apply(self, base: np.ndarray, layer: np.ndarray) -> np.ndarray:
+        """Return independent normalized RGB pixels in the common float dtype."""
+        base, layer = prepare_images(base, layer)
+        return np.minimum(base, layer)
 
 
+class Multiply(BlendMode):
+    """Multiply corresponding RGB channels."""
+
+    def apply(self, base: np.ndarray, layer: np.ndarray) -> np.ndarray:
+        """Return independent normalized RGB pixels in the common float dtype."""
+        base, layer = prepare_images(base, layer)
+        return base * layer
 
 
-class color_burn :
+class ColorBurn(BlendMode):
+    """Darken through Color Burn with defined black and white endpoints."""
 
-    def __init__(self): 
-        pass
-
-    def apply( self, base_color, blend_color): 
-
-        formula = 1 - ((1-base_color)/blend_color)
-        return formula
+    def apply(self, base: np.ndarray, layer: np.ndarray) -> np.ndarray:
+        """Return independent normalized RGB pixels in the common float dtype."""
+        base, layer = prepare_images(base, layer)
+        return color_burn(base, layer)
 
 
+class LinearBurn(BlendMode):
+    """Add RGB values and subtract one, clipping at black."""
+
+    def apply(self, base: np.ndarray, layer: np.ndarray) -> np.ndarray:
+        """Return independent normalized RGB pixels in the common float dtype."""
+        base, layer = prepare_images(base, layer)
+        return np.clip(base + layer - 1, 0, 1)
 
 
-class linear_burn : 
+class DarkerColor(BlendMode):
+    """Select the whole RGB pixel with the lower channel sum; ties keep base."""
 
-    def __init__(self):
-        pass
-
-
-
-    def apply( self, base_color, blend_color): 
-
-        formula2 = base_color + blend_color -1
-        return formula2
-
-
-
-class darker_color : 
-
-    def __init__(self): 
-        pass
-
-    def apply( self, base_color, blend_color): 
-
-        total_base = np.sum(base_color)
-        total_blend = np.sum( blend_color)
-
-        if total_base < total_blend : 
-            return base_color
-        else : 
-            return blend_color
-
-    
+    def apply(self, base: np.ndarray, layer: np.ndarray) -> np.ndarray:
+        """Return independent normalized RGB pixels in the common float dtype."""
+        base, layer = prepare_images(base, layer)
+        choose_base = base.sum(axis=-1, keepdims=True) <= layer.sum(axis=-1, keepdims=True)
+        return np.where(choose_base, base, layer)
