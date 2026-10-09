@@ -1,5 +1,9 @@
 """Regression checks for RGB formulas, spatial filters and alpha modes."""
 
+"""MADE BY AI FYI"""
+"""MADE BY AI FYI"""
+"""MADE BY AI FYI"""
+
 import unittest
 
 import numpy as np
