@@ -98,4 +98,4 @@ Invalid configurations, unknown operations, unreadable images and incompatible d
 
 The project includes the five filters listed above. Other planned filters, including grayscale, are not implemented yet.
 
-A real filter exchange with another group still needs to be demonstrated. The engine does not claim pixel-exact reproduction of Photoshop.
+A real filter exchange with another group still needs to be demonstrated. See [filter exchange](docs/filter_exchange.md) for the remaining steps. The engine does not claim pixel-exact reproduction of Photoshop.
