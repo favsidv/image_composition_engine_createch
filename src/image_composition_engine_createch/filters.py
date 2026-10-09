@@ -1,12 +1,45 @@
-"""RGB filters returning independent, normalized floating-point arrays."""
+"""Portable RGB filters requiring NumPy and SciPy, with no project imports.
+
+Copy this file unchanged to another project. Inputs are normalized RGB arrays
+with shape (height, width, 3), using float32 or float64. Outputs are independent
+arrays with the same shape and dtype. Alpha is handled by the calling engine.
+"""
 
 import math
+from abc import ABC, abstractmethod
 
 import numpy as np
 from scipy.ndimage import gaussian_filter, uniform_filter
 
-from .contracts import Filter
-from .validation import validate_normalized_image
+class Filter(ABC):
+    """Reference interface included in this portable filter module."""
+
+    def __init__(self, params: dict) -> None:
+        """Keep a shallow copy of dictionary-based filter parameters."""
+        self.params = params.copy()
+
+    @abstractmethod
+    def apply(self, image: np.ndarray) -> np.ndarray:
+        """Return independent RGB pixels with the input shape and float dtype.
+
+        Inputs are normalized to [0, 1]. Do not modify the input array.
+        The pipeline clips finite output values to [0, 1].
+        """
+        raise NotImplementedError
+
+
+def validate_normalized_image(image: np.ndarray, channels: int = 3) -> None:
+    """Require a nonempty float32/float64 image with finite values in [0, 1]."""
+    if not isinstance(image, np.ndarray):
+        raise TypeError("Expected a NumPy array.")
+    if image.dtype not in (np.float32, np.float64):
+        raise TypeError("Expected float32 or float64 pixels.")
+    if image.ndim != 3 or image.shape[2] != channels or image.size == 0:
+        raise ValueError(f"Expected a nonempty image with {channels} channels.")
+    if not np.isfinite(image).all():
+        raise ValueError("Pixels must contain only finite values.")
+    if np.any((image < 0) | (image > 1)):
+        raise ValueError("Image values must be between 0 and 1.")
 
 
 def _finite_number(value: float, name: str) -> None:

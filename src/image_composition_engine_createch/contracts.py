@@ -3,21 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 
-class Filter(ABC):
-    """Reference RGB filter interface; registries adapt constructor arguments."""
-
-    def __init__(self, params: dict) -> None:
-        """Keep a shallow copy of dictionary-based filter parameters."""
-        self.params = params.copy()
-
-    @abstractmethod
-    def apply(self, image: np.ndarray) -> np.ndarray:
-        """Return independent RGB pixels with the input shape and float dtype.
-
-        Inputs are normalized to [0, 1]. Do not modify the input array.
-        The pipeline clips finite output values to [0, 1].
-        """
-        raise NotImplementedError
+from .filters import Filter
 
 
 class BlendMode(ABC):

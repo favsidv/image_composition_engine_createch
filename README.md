@@ -58,6 +58,28 @@ Blur filters also accept radius instead of window. Do not provide both names.
 
 A radius of 2 gives a maximum neighborhood width of 5 pixels. Blur weights are renormalized at image boundaries.
 
+## Sharing filters
+
+Send `src/image_composition_engine_createch/filters.py` unchanged. It contains
+the Filter base class and its validation helpers, so no other project file is
+required. The receiving project needs Python 3.13 or newer, NumPy and SciPy.
+
+With the file placed next to the receiving code:
+
+```python
+from filters import Brightness
+
+result = Brightness(level=0.1).apply(image)
+```
+
+The input must be an RGB NumPy array with shape `(height, width, 3)`, dtype
+`float32` or `float64`, and values in `[0, 1]`. The result is a new array with
+the same shape and dtype. The receiving engine handles alpha separately.
+Agree on this interface and register the class in the receiving project.
+
+Standalone import checks establish portability; they do not replace the real
+exchange and run with another student required for the assignment.
+
 ## Blending and transparency
 
 Blendings have been made by Brune, and revisited for more comprehension by Chat-GPT.
