@@ -1,0 +1,28 @@
+{
+    "layers": [
+      {
+        "image": "images/layers/0_photo.jpg",
+        "filters": [],
+        "blend": "normal",
+        "opacity": 1.0
+      },
+      {
+        "image": "images/layers/1_pop_bike.png",
+        "filters": [],
+        "blend": "normal",
+        "opacity": 0.32
+      },
+      {
+        "image": "images/layers/2_wall.png",
+        "filters": [],
+        "blend": "normal",
+        "opacity": 1.0
+      },
+      {
+        "image": "images/layers/3_shiny_car.png",
+        "filters": [],
+        "blend": "normal",
+        "opacity": 1.0
+      }
+    ]
+  }
